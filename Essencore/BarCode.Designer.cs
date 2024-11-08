@@ -53,6 +53,8 @@
             label10 = new Label();
             lblWeekNumber = new Label();
             label11 = new Label();
+            label12 = new Label();
+            lbluserid = new Label();
             ((System.ComponentModel.ISupportInitialize)dgvBarcodeDetails).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
@@ -60,8 +62,10 @@
             // lblBarcode
             // 
             lblBarcode.AutoSize = true;
+            lblBarcode.BackColor = SystemColors.ActiveCaption;
             lblBarcode.Font = new Font("Showcard Gothic", 18F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            lblBarcode.Location = new Point(487, 6);
+            lblBarcode.ForeColor = SystemColors.ActiveCaptionText;
+            lblBarcode.Location = new Point(595, 6);
             lblBarcode.Name = "lblBarcode";
             lblBarcode.Size = new Size(138, 30);
             lblBarcode.TabIndex = 0;
@@ -181,7 +185,8 @@
             dgvBarcodeDetails.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dgvBarcodeDetails.Location = new Point(415, 114);
             dgvBarcodeDetails.Name = "dgvBarcodeDetails";
-            dgvBarcodeDetails.Size = new Size(702, 474);
+            dgvBarcodeDetails.RowHeadersWidth = 62;
+            dgvBarcodeDetails.Size = new Size(800, 474);
             dgvBarcodeDetails.TabIndex = 16;
             // 
             // label7
@@ -216,7 +221,7 @@
             // 
             // btnClear
             // 
-            btnClear.Location = new Point(23, 610);
+            btnClear.Location = new Point(23, 592);
             btnClear.Name = "btnClear";
             btnClear.Size = new Size(75, 23);
             btnClear.TabIndex = 20;
@@ -246,7 +251,7 @@
             // pictureBox1
             // 
             pictureBox1.Image = Properties.Resources.SyrmaSgs;
-            pictureBox1.Location = new Point(960, 37);
+            pictureBox1.Location = new Point(1088, 37);
             pictureBox1.Name = "pictureBox1";
             pictureBox1.Size = new Size(152, 50);
             pictureBox1.TabIndex = 24;
@@ -279,17 +284,44 @@
             // 
             label11.AutoSize = true;
             label11.Font = new Font("Showcard Gothic", 18F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label11.Location = new Point(435, 36);
+            label11.Location = new Point(566, 36);
             label11.Name = "label11";
-            label11.Size = new Size(261, 30);
+            label11.Size = new Size(198, 30);
             label11.TabIndex = 28;
-            label11.Text = "QR Code Generation";
+            label11.Text = "Label Printing";
+            label11.Click += label11_Click;
+            // 
+            // label12
+            // 
+            label12.AutoSize = true;
+            label12.Font = new Font("Showcard Gothic", 12F);
+            label12.Location = new Point(879, 36);
+            label12.Name = "label12";
+            label12.Size = new Size(70, 20);
+            label12.TabIndex = 29;
+            label12.Text = "User ID";
+            label12.Click += label12_Click;
+            // 
+            // lbluserid
+            // 
+            lbluserid.AllowDrop = true;
+            lbluserid.AutoSize = true;
+            lbluserid.Font = new Font("Showcard Gothic", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            lbluserid.Location = new Point(955, 37);
+            lbluserid.Name = "lbluserid";
+            lbluserid.Size = new Size(71, 18);
+            lbluserid.TabIndex = 30;
+            lbluserid.Text = "0000000";
+            lbluserid.Click += lbluserid_Click;
             // 
             // frmBarcode
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1147, 645);
+            BackColor = SystemColors.ActiveCaption;
+            ClientSize = new Size(1112, 449);
+            Controls.Add(lbluserid);
+            Controls.Add(label12);
             Controls.Add(label11);
             Controls.Add(lblWeekNumber);
             Controls.Add(label10);
@@ -350,5 +382,7 @@
         private Label label10;
         private Label lblWeekNumber;
         private Label label11;
+        private Label label12;
+        private Label lbluserid;
     }
 }

@@ -16,13 +16,15 @@ namespace Essencore
         SqlDataAdapter adapter;
         SqlDataReader reader;
         DataTable dt;
-        public string DbConnect(string barcode)
+        public string DbConnect(string barcode,int labelid,string emp_id)
         {
             try
             {
-                cmd = new SqlCommand("pro_getCustomerSerialNo", con);
+                cmd = new SqlCommand("pro_getCustomerSerialNoSSD", con);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@pcbserialno", barcode);
+                cmd.Parameters.AddWithValue("@labelmasterid", labelid);
+                cmd.Parameters.AddWithValue("@user_id",emp_id);
                 con.Open();
                 var reader = cmd.ExecuteScalar();
                 con.Close();
@@ -35,15 +37,16 @@ namespace Essencore
             }
         }
 
-        public List<BarcodeDetails> GetBarcodeDetails(string productno)
+        public List<BarcodeDetails> GetBarcodeDetails(int labelid)
         {
             var list = new List<BarcodeDetails>();
             try
             {
                 
                 BarcodeDetails objBar;
-                cmd = new SqlCommand("pro_getPrintedValue", con);
+                cmd = new SqlCommand("pro_getPrintedValueEssencoreSSD", con);
                 cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@labelmasterid", labelid);
                 adapter = new SqlDataAdapter(cmd);
                 dt = new DataTable();
                 adapter.Fill(dt);
@@ -52,7 +55,7 @@ namespace Essencore
                     objBar = new BarcodeDetails();
                     objBar.CustomerSerialNo = Convert.ToString(dr["CustomerSerialNo"]);
                     objBar.PCBSerialNo = Convert.ToString(dr["PCBSerialNo"]);
-                    objBar.ProductNo = productno;
+                    objBar.ProductNo = Convert.ToString(dr["productno"]);
                     list.Add(objBar);
                 }
                 return list;
@@ -70,7 +73,7 @@ namespace Essencore
             {
                 
                 labeltype objType = new labeltype();
-                cmd = new SqlCommand("getLabelType", con);
+                cmd = new SqlCommand("getLabelTypeEssencoreSSD", con);
                 cmd.CommandType = CommandType.StoredProcedure;
                 adapter = new SqlDataAdapter(cmd);
                 dt = new DataTable();
@@ -98,7 +101,7 @@ namespace Essencore
             try
             {
                 string result = string.Empty;
-                cmd = new SqlCommand("get_ProductNo", con);
+                cmd = new SqlCommand("get_ProductNoEssencoreSSD", con);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@labelid", labelid);
                 adapter = new SqlDataAdapter(cmd);

@@ -16,11 +16,14 @@ namespace Essencore
         private System.Windows.Forms.Timer blinkTimer;
         private bool isBlinking;
         private Color originalColor;
+        private string emp_id;
 
-        public frmBarcode()
+        public frmBarcode(string emp_id)
         {
             InitializeComponent();
             DisplayWeekNumber();
+            this.emp_id = emp_id;
+            lbluserid.Text = this.emp_id;
 
             this.KeyPreview = true;
 
@@ -61,11 +64,11 @@ namespace Essencore
 
 
         //----Db coonection for serial and product number without duplicates----//
-        private void ProcessBarcode(string barcode)
+        private void ProcessBarcode(string barcode, int labelid, string emp_id)
         {
             if (cmbProductType.SelectedIndex != 0)
             {
-                var bcode = getConn.DbConnect(barcode);
+                var bcode = getConn.DbConnect(barcode, labelid, emp_id);
 
                 if (bcode != "Duplicate" && bcode != "NotFound")
                 {
@@ -97,7 +100,8 @@ namespace Essencore
                 }
                 else if (bcode == "NotFound")
                 {
-                    rtbInstruction.Text = "PCB Serial No Not Fount";
+                    rtbInstruction.Text = "PCB Serial Not Found!" + Environment.NewLine + "or Product Type Mismatch!"
+                                                  + Environment.NewLine + "Please Enter or Select valid value";
                     rtbInstruction.BackColor = Color.Gray;
                     rtbInstruction.Font = new Font("Showcard Gothic", 12f);
                 }
@@ -147,33 +151,39 @@ namespace Essencore
 
         public void printLabelBarcode(string productno, string cus_serialno)
         {
- 
-            //string labelFormatPath = @"D:\QR_CODE.btw";
-            string labelFormatPath = @"D:\BarCode.btw";
-
-            var product_no = string.IsNullOrEmpty(productno) ? string.Empty : productno;
-            var cus_no = string.IsNullOrEmpty(cus_serialno) ? string.Empty : cus_serialno;
-            if (product_no != string.Empty && cus_no != string.Empty)
+            try
             {
 
-                var externalValues = new Dictionary<string, string>
+                //string labelFormatPath = @"D:\QR_CODE.btw";
+                string labelFormatPath = @"D:\QREssencoreNew.btw";
+
+                var product_no = string.IsNullOrEmpty(productno) ? string.Empty : productno;
+                var cus_no = string.IsNullOrEmpty(cus_serialno) ? string.Empty : cus_serialno;
+                if (product_no != string.Empty && cus_no != string.Empty)
+                {
+
+                    var externalValues = new Dictionary<string, string>
         {
             { "SerialNumber", cus_serialno },
-            { "ProductNumber", productno },
-            //{ "QR_value1", productno.Trim().Substring(1,4) },
-            //{ "QR_value2", productno.Trim().Substring(5,10) },
+            //{ "ProductNumber", productno },
+            { "QR_value1", cus_serialno.Trim().Substring(0,5) },
+            { "QR_value2", cus_serialno.Trim().Substring(cus_serialno.Length-5) },
 
         };
 
-                PrintLabel(labelFormatPath, externalValues);
-                txtPCBSerialNo.Text = string.Empty;
-                txtPCBSerialNo.Focus();
+                    PrintLabel(labelFormatPath, externalValues);
+                    txtPCBSerialNo.Text = string.Empty;
+                    txtPCBSerialNo.Focus();
+                }
+                else
+                {
+                    MessageBox.Show("Database not connected. Please check with admin");
+                }
             }
-            else
+            catch (Exception ex)
             {
-                MessageBox.Show("Database not connected. Please check with admin");
+                MessageBox.Show(ex.Message.ToString());
             }
-
         }
 
         public void PrintLabel(string labelFormatPath, Dictionary<string, string> values)
@@ -234,7 +244,8 @@ namespace Essencore
             {
                 // Process the barcode
                 //  ProcessBarcode(barcodeData.ToString());
-                ProcessBarcode(txtPCBSerialNo.Text);
+                int labelid = Convert.ToInt32(cmbProductType.SelectedValue);
+                ProcessBarcode(txtPCBSerialNo.Text, labelid, this.emp_id);
 
                 barcodeData.Clear();
             }
@@ -251,7 +262,8 @@ namespace Essencore
             {
 
                 string productNo = lblProductNo.Text.ToString();
-                var barcodedetails = getConn.GetBarcodeDetails(productNo);
+                int labelid = Convert.ToInt32(cmbProductType.SelectedValue);
+                var barcodedetails = getConn.GetBarcodeDetails(labelid);
                 dgvBarcodeDetails.DataSource = barcodedetails;
                 dgvBarcodeDetails.Columns["ProductNo"].Width = 250;
                 dgvBarcodeDetails.Columns["CustomerSerialNo"].Width = 250;
@@ -303,7 +315,7 @@ namespace Essencore
                     {
                         txtWorkorderNo.Text = productdetails.WorkOrderNo;
                         txtCustomerPartNo.Text = productdetails.CustomerPartNo;
-                        txtDescription.Text = productdetails.Bar_Description;
+                        txtDescription.Text = productdetails.ProductNo;
                         lblProductNo.Text = productdetails.ProductNo;
                         DataBindings();
                         txtPCBSerialNo.Focus();
@@ -339,6 +351,21 @@ namespace Essencore
         }
 
         private void label10_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label11_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void lbluserid_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label12_Click(object sender, EventArgs e)
         {
 
         }

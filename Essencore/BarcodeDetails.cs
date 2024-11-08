@@ -21,7 +21,11 @@ namespace Essencore
         //public string ShiftType { get; set; }
         public int WeekDetails { get; set; }
         //public string Dublicate { get; set; }
-        
 
+    }
+
+    class UserDetails
+    {
+        public string emp_id { get; set; }
     }
 }
