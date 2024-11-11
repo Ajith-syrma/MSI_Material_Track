@@ -100,7 +100,7 @@ namespace Essencore
             var listWorkOrderNos = new List<string>();
             try
             {
-                cmd=new SqlCommand("get_WorkOrderDetails",con);
+                cmd=new SqlCommand("get_WorkOrderDetailsSSD", con);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@labelID",labelid);
                 adapter = new SqlDataAdapter(cmd);
