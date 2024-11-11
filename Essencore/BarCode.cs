@@ -5,6 +5,7 @@ using System.Text;
 using System.Runtime.InteropServices;
 using BarTender;
 using System.Globalization;
+using System.Diagnostics.Eventing.Reader;
 
 
 namespace Essencore
@@ -66,7 +67,7 @@ namespace Essencore
         //----Db coonection for serial and product number without duplicates----//
         private void ProcessBarcode(string barcode, int labelid, string emp_id)
         {
-            if (cmbProductType.SelectedIndex != 0)
+            if (cmbProductType.SelectedIndex != 0 && !string.IsNullOrEmpty(txtWorkorderNo.Text))
             {
                 var bcode = getConn.DbConnect(barcode, labelid, emp_id);
 
@@ -106,10 +107,16 @@ namespace Essencore
                     rtbInstruction.Font = new Font("Showcard Gothic", 12f);
                 }
             }
-            else if (cmbProductType.SelectedIndex == 0)
+            else if (cmbProductType.SelectedIndex == 0) 
             {
                 MessageBox.Show("Please Select the Product Type");
             }
+            else if (txtWorkorderNo.Text == string.Empty)
+            {
+                MessageBox.Show("Please Enter the WorkOrder Number ");
+            }
+                
+
         }
 
         private void BlinkTextBox()
@@ -313,7 +320,7 @@ namespace Essencore
                     var productdetails = getConn.GetProductDetails(labelid);
                     if (productdetails.WorkOrderNo != null)
                     {
-                        txtWorkorderNo.Text = productdetails.WorkOrderNo;
+                        //txtWorkorderNo.Text = productdetails.WorkOrderNo;
                         txtCustomerPartNo.Text = productdetails.CustomerPartNo;
                         txtDescription.Text = productdetails.ProductNo;
                         lblProductNo.Text = productdetails.ProductNo;
