@@ -54,11 +54,11 @@ namespace Essencore
 
 
         //----Db coonection for serial and product number without duplicates----//
-        private void ProcessBarcode(string barcode, int labelid, string emp_id)
+        private void ProcessBarcode(string barcode, int labelid, string emp_id, string Work_Orderno)
         {
-            if (cmbProductType.SelectedIndex != 0 && !string.IsNullOrEmpty(cmbWorkOrderNo.SelectedValue.ToString()))
+            if (cmbProductType.SelectedIndex != 0 && cmbWorkOrderNo.SelectedValue.ToString() != "Select")
             {
-                var bcode = getConn.DbConnect(barcode, labelid, emp_id);
+                var bcode = getConn.DbConnect(barcode, labelid, emp_id, Work_Orderno);
 
                 if (bcode != "Duplicate" && bcode != "NotFound")
                 {
@@ -102,7 +102,7 @@ namespace Essencore
             }
             else if (cmbWorkOrderNo.SelectedValue.ToString() == "Select")
             {
-                MessageBox.Show("Please Enter the WorkOrder Number ");
+                MessageBox.Show("Please select the WorkOrder Number ");
             }
 
 
@@ -241,7 +241,8 @@ namespace Essencore
                 // Process the barcode
                 //  ProcessBarcode(barcodeData.ToString());
                 int labelid = Convert.ToInt32(cmbProductType.SelectedValue);
-                ProcessBarcode(txtPCBSerialNo.Text, labelid, this.emp_id);
+                string Work_Orderno = cmbWorkOrderNo.SelectedValue.ToString().Trim();
+                ProcessBarcode(txtPCBSerialNo.Text, labelid, this.emp_id, Work_Orderno);
 
                 barcodeData.Clear();
             }

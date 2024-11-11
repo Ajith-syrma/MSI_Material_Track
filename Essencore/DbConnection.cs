@@ -16,7 +16,7 @@ namespace Essencore
         SqlDataAdapter adapter;
         SqlDataReader reader;
         DataTable dt;
-        public string DbConnect(string barcode,int labelid,string emp_id)
+        public string DbConnect(string barcode,int labelid,string emp_id,string Work_Orderno)
         {
             try
             {
@@ -25,6 +25,7 @@ namespace Essencore
                 cmd.Parameters.AddWithValue("@pcbserialno", barcode);
                 cmd.Parameters.AddWithValue("@labelmasterid", labelid);
                 cmd.Parameters.AddWithValue("@user_id",emp_id);
+                cmd.Parameters.AddWithValue("@Work_Orderno", Work_Orderno);
                 con.Open();
                 var reader = cmd.ExecuteScalar();
                 con.Close();
@@ -126,7 +127,7 @@ namespace Essencore
             try
             {
                 string result = string.Empty;
-                cmd = new SqlCommand("get_ProductNoEssencoreSSDNew", con);
+                cmd = new SqlCommand("get_ProductNoEssencoreSSD", con);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@labelid", labelid);
                 cmd.Parameters.AddWithValue("@WorkOrderNo", workorderno);
