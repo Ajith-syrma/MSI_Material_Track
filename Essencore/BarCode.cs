@@ -27,7 +27,8 @@ namespace Essencore
             lbluserid.Text = this.emp_id;
 
             this.KeyPreview = true;
-
+            FormBorderStyle = FormBorderStyle.None;
+            WindowState = FormWindowState.Maximized;
         }
 
 
@@ -52,22 +53,10 @@ namespace Essencore
         }
 
 
-        private void lblBarcode_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void btnBarcodePrint_Click(object sender, EventArgs e)
-        {
-
-
-        }
-
-
         //----Db coonection for serial and product number without duplicates----//
         private void ProcessBarcode(string barcode, int labelid, string emp_id)
         {
-            if (cmbProductType.SelectedIndex != 0 && !string.IsNullOrEmpty(txtWorkorderNo.Text))
+            if (cmbProductType.SelectedIndex != 0 && !string.IsNullOrEmpty(cmbWorkOrderNo.SelectedValue.ToString()))
             {
                 var bcode = getConn.DbConnect(barcode, labelid, emp_id);
 
@@ -107,15 +96,15 @@ namespace Essencore
                     rtbInstruction.Font = new Font("Showcard Gothic", 12f);
                 }
             }
-            else if (cmbProductType.SelectedIndex == 0) 
+            else if (cmbProductType.SelectedIndex == 0)
             {
                 MessageBox.Show("Please Select the Product Type");
             }
-            else if (txtWorkorderNo.Text == string.Empty)
+            else if (cmbWorkOrderNo.SelectedValue.ToString() == "Select")
             {
                 MessageBox.Show("Please Enter the WorkOrder Number ");
             }
-                
+
 
         }
 
@@ -147,7 +136,7 @@ namespace Essencore
             txtPCBSerialNo.Focus();
             txtPCBSerialNo.Text = string.Empty;
             txtCustomerPartNo.Text = string.Empty;
-            txtWorkorderNo.Text = string.Empty;
+            cmbWorkOrderNo.Text = "Select";
             txtDescription.Text = string.Empty;
             cmbProductType.SelectedIndex = 0;
             rtbInstruction.Text = string.Empty;
@@ -272,9 +261,9 @@ namespace Essencore
                 int labelid = Convert.ToInt32(cmbProductType.SelectedValue);
                 var barcodedetails = getConn.GetBarcodeDetails(labelid);
                 dgvBarcodeDetails.DataSource = barcodedetails;
-                dgvBarcodeDetails.Columns["ProductNo"].Width = 250;
-                dgvBarcodeDetails.Columns["CustomerSerialNo"].Width = 250;
-                dgvBarcodeDetails.Columns["PCBSerialNo"].Width = 250;
+                dgvBarcodeDetails.Columns["ProductNo"].Width = 350;
+                dgvBarcodeDetails.Columns["CustomerSerialNo"].Width = 395;
+                dgvBarcodeDetails.Columns["PCBSerialNo"].Width = 395;
                 dgvBarcodeDetails.Columns["SyrmaSGSPartno"].Visible = false;
                 dgvBarcodeDetails.Columns["WorkOrderNo"].Visible = false;
                 dgvBarcodeDetails.Columns["CustomerPartNo"].Visible = false;
@@ -316,24 +305,11 @@ namespace Essencore
             {
                 if (cmbProductType.SelectedIndex != 0)
                 {
-                    int labelid = Convert.ToInt32(cmbProductType.SelectedValue);
-                    var productdetails = getConn.GetProductDetails(labelid);
-                    if (productdetails.WorkOrderNo != null)
+                    int labelid = Convert.ToInt32(cmbProductType.SelectedValue.ToString());
+                    var listNos = getConn.getWorkOrderDetails(labelid);
+                    if (listNos != null && listNos.Count > 0)
                     {
-                        //txtWorkorderNo.Text = productdetails.WorkOrderNo;
-                        txtCustomerPartNo.Text = productdetails.CustomerPartNo;
-                        txtDescription.Text = productdetails.ProductNo;
-                        lblProductNo.Text = productdetails.ProductNo;
-                        DataBindings();
-                        txtPCBSerialNo.Focus();
-                    }
-                    else
-                    {
-                        dgvBarcodeDetails.Columns.Clear();
-                        txtWorkorderNo.Text = string.Empty;
-                        txtCustomerPartNo.Text = string.Empty;
-                        txtDescription.Text = string.Empty;
-                        lblProductNo.Text = string.Empty;
+                        cmbWorkOrderNo.DataSource = listNos;
                     }
                 }
                 else
@@ -347,34 +323,45 @@ namespace Essencore
             { MessageBox.Show(ex.Message.ToString()); }
         }
 
-        private void label13_Click(object sender, EventArgs e)
+        public void getFGDetails()
         {
-
+            int labelid = Convert.ToInt32(cmbProductType.SelectedValue);
+            var productdetails = getConn.GetProductDetails(labelid, cmbWorkOrderNo.SelectedValue.ToString());
+            if (productdetails.WorkOrderNo != null)
+            {
+                //txtWorkorderNo.Text = productdetails.WorkOrderNo;
+                txtCustomerPartNo.Text = productdetails.CustomerPartNo;
+                txtDescription.Text = productdetails.ProductNo;
+                lblProductNo.Text = productdetails.ProductNo;
+                DataBindings();
+                txtPCBSerialNo.Focus();
+            }
+            else
+            {
+                dgvBarcodeDetails.Columns.Clear();
+                //txtWorkorderNo.Text = string.Empty;
+                txtCustomerPartNo.Text = string.Empty;
+                txtDescription.Text = string.Empty;
+                lblProductNo.Text = string.Empty;
+            }
         }
 
-        private void lblWeekNumber_Click(object sender, EventArgs e)
+        private void cmbWorkOrderNo_SelectedIndexChanged(object sender, EventArgs e)
         {
-
+            try
+            {
+                if (cmbWorkOrderNo.SelectedValue.ToString() != "Select" && cmbWorkOrderNo.Text != string.Empty)
+                    getFGDetails();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message.ToString());
+            }
         }
 
-        private void label10_Click(object sender, EventArgs e)
+        private void btnExit_Click(object sender, EventArgs e)
         {
-
-        }
-
-        private void label11_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void lbluserid_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label12_Click(object sender, EventArgs e)
-        {
-
+            this.Close();
         }
     }
 

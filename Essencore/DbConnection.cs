@@ -95,15 +95,41 @@ namespace Essencore
 
         }
 
-        public BarcodeDetails GetProductDetails(int labelid)
+        public List<string> getWorkOrderDetails(int labelid) {
+            var listWorkOrderNos = new List<string>();
+            try
+            {
+                cmd=new SqlCommand("get_WorkOrderDetails",con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@labelID",labelid);
+                adapter = new SqlDataAdapter(cmd);
+                dt = new DataTable();
+                adapter.Fill(dt);
+                if (dt.Rows.Count > 0)
+                {
+                    foreach (DataRow dr in dt.Rows)
+                    {
+                        listWorkOrderNos.Add(dr["WorkOrderNo"].ToString());
+                    }
+                }
+                return listWorkOrderNos;
+            }
+            catch (Exception ex) {
+                return listWorkOrderNos ;
+                MessageBox.Show(ex.Message.ToString());
+            }
+        }
+
+        public BarcodeDetails GetProductDetails(int labelid,string workorderno)
         {
             var barCodeDetils = new BarcodeDetails();
             try
             {
                 string result = string.Empty;
-                cmd = new SqlCommand("get_ProductNoEssencoreSSD", con);
+                cmd = new SqlCommand("get_ProductNoEssencoreSSDNew", con);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@labelid", labelid);
+                cmd.Parameters.AddWithValue("@WorkOrderNo", workorderno);
                 adapter = new SqlDataAdapter(cmd);
                 dt = new DataTable();
                 adapter.Fill(dt);
