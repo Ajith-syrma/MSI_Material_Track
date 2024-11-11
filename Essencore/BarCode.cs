@@ -262,9 +262,9 @@ namespace Essencore
                 int labelid = Convert.ToInt32(cmbProductType.SelectedValue);
                 var barcodedetails = getConn.GetBarcodeDetails(labelid);
                 dgvBarcodeDetails.DataSource = barcodedetails;
-                dgvBarcodeDetails.Columns["ProductNo"].Width = 350;
-                dgvBarcodeDetails.Columns["CustomerSerialNo"].Width = 395;
-                dgvBarcodeDetails.Columns["PCBSerialNo"].Width = 395;
+                dgvBarcodeDetails.Columns["ProductNo"].Width = 260;
+                dgvBarcodeDetails.Columns["CustomerSerialNo"].Width = 255;
+                dgvBarcodeDetails.Columns["PCBSerialNo"].Width = 250;
                 dgvBarcodeDetails.Columns["SyrmaSGSPartno"].Visible = false;
                 dgvBarcodeDetails.Columns["WorkOrderNo"].Visible = false;
                 dgvBarcodeDetails.Columns["CustomerPartNo"].Visible = false;
