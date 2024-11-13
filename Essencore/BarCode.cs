@@ -261,6 +261,23 @@ namespace Essencore
                 string productNo = lblProductNo.Text.ToString();
                 int labelid = Convert.ToInt32(cmbProductType.SelectedValue);
                 var barcodedetails = getConn.GetBarcodeDetails(labelid);
+
+                // Column design changes 
+                dgvBarcodeDetails.ColumnHeadersDefaultCellStyle.Font = new Font("Arial", 10, FontStyle.Bold);
+
+                dgvBarcodeDetails.ColumnHeadersDefaultCellStyle.BackColor = Color.LightBlue;
+
+
+                foreach (DataGridViewColumn column in dgvBarcodeDetails.Columns)
+                {
+                    column.HeaderText = column.HeaderText.ToUpper();
+                }
+
+                dgvBarcodeDetails.Refresh();
+
+                //Value 
+
+
                 dgvBarcodeDetails.DataSource = barcodedetails;
                 dgvBarcodeDetails.Columns["ProductNo"].Width = 260;
                 dgvBarcodeDetails.Columns["CustomerSerialNo"].Width = 255;
