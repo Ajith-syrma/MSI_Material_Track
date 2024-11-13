@@ -66,11 +66,11 @@
             lblBarcode.BackColor = SystemColors.ActiveCaption;
             lblBarcode.Font = new Font("Showcard Gothic", 18F, FontStyle.Regular, GraphicsUnit.Point, 0);
             lblBarcode.ForeColor = SystemColors.ActiveCaptionText;
-            lblBarcode.Location = new Point(668, 10);
+            lblBarcode.Location = new Point(637, 10);
             lblBarcode.Name = "lblBarcode";
-            lblBarcode.Size = new Size(138, 30);
+            lblBarcode.Size = new Size(206, 30);
             lblBarcode.TabIndex = 0;
-            lblBarcode.Text = "Essencore";
+            lblBarcode.Text = "Essencore-SATA";
             // 
             // label1
             // 
