@@ -161,7 +161,7 @@ namespace Essencore
                     var externalValues = new Dictionary<string, string>
         {
             { "SerialNumber", cus_serialno },
-            //{ "ProductNumber", productno },
+            { "ProductNumber", productno },
             { "QR_value1", cus_serialno.Trim().Substring(0,5) },
             { "QR_value2", cus_serialno.Trim().Substring(cus_serialno.Length-5) },
 
