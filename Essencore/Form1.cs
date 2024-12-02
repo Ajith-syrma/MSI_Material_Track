@@ -12,7 +12,7 @@ using System.Windows.Forms;
 using ZXing;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
-namespace Essencore
+namespace MSI
 {
     public partial class Form1 : Form
     {

@@ -1,6 +1,6 @@
 using ZXing.QrCode.Internal;
 
-namespace Essencore
+namespace MSI
 {
     internal static class Program
     {

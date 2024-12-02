@@ -8,7 +8,7 @@ using System.Globalization;
 using System.Diagnostics.Eventing.Reader;
 
 
-namespace Essencore
+namespace MSI
 {
     public partial class frmBarcode : Form
     {
@@ -71,7 +71,7 @@ namespace Essencore
 
 
                     rtbInstruction.BackColor = Color.Empty;
-                    txtCustomerSerialNo.Text = bcode.ToString();
+                    //txtCustomerSerialNo.Text = bcode.ToString();
                 }
                 else if (bcode == "Duplicate")
                 {
@@ -123,7 +123,7 @@ namespace Essencore
             {
                 blinkTimer.Stop();
                 txtPCBSerialNo.BackColor = Color.Empty;
-                txtDescription.Text = string.Empty;
+                //txtDescription.Text = string.Empty;
             }
 
             isBlinking = !isBlinking;
@@ -132,12 +132,12 @@ namespace Essencore
 
         private void btnClear_Click_1(object sender, EventArgs e)
         {
-            txtCustomerSerialNo.Text = string.Empty;
+            //txtCustomerSerialNo.Text = string.Empty;
             txtPCBSerialNo.Focus();
             txtPCBSerialNo.Text = string.Empty;
-            txtCustomerPartNo.Text = string.Empty;
+            //txtCustomerPartNo.Text = string.Empty;
             cmbWorkOrderNo.Text = "Select";
-            txtDescription.Text = string.Empty;
+            //txtDescription.Text = string.Empty;
             cmbProductType.SelectedIndex = 0;
             rtbInstruction.Text = string.Empty;
             rtbInstruction.BackColor = Color.Empty;
@@ -348,8 +348,8 @@ namespace Essencore
             if (productdetails.WorkOrderNo != null)
             {
                 //txtWorkorderNo.Text = productdetails.WorkOrderNo;
-                txtCustomerPartNo.Text = productdetails.CustomerPartNo;
-                txtDescription.Text = productdetails.ProductNo;
+                //txtCustomerPartNo.Text = productdetails.CustomerPartNo;
+                //txtDescription.Text = productdetails.ProductNo;
                 lblProductNo.Text = productdetails.ProductNo;
                 DataBindings();
                 txtPCBSerialNo.Focus();
@@ -358,8 +358,8 @@ namespace Essencore
             {
                 dgvBarcodeDetails.Columns.Clear();
                 //txtWorkorderNo.Text = string.Empty;
-                txtCustomerPartNo.Text = string.Empty;
-                txtDescription.Text = string.Empty;
+                //txtCustomerPartNo.Text = string.Empty;
+                //txtDescription.Text = string.Empty;
                 lblProductNo.Text = string.Empty;
             }
         }
@@ -380,6 +380,11 @@ namespace Essencore
         private void btnExit_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void lblBarcode_Click(object sender, EventArgs e)
+        {
+
         }
     }
 

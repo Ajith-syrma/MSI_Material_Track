@@ -1,4 +1,4 @@
-﻿namespace Essencore
+﻿namespace MSI
 {
     partial class Form1
     {
@@ -34,18 +34,21 @@
             // 
             // pictureBoxBarcode
             // 
-            pictureBoxBarcode.Location = new Point(156, 67);
+            pictureBoxBarcode.Location = new Point(223, 112);
+            pictureBoxBarcode.Margin = new Padding(4, 5, 4, 5);
             pictureBoxBarcode.Name = "pictureBoxBarcode";
-            pictureBoxBarcode.Size = new Size(474, 65);
+            pictureBoxBarcode.Size = new Size(677, 108);
             pictureBoxBarcode.TabIndex = 1;
             pictureBoxBarcode.TabStop = false;
             // 
             // Form1
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 450);
+            BackColor = SystemColors.ControlDark;
+            ClientSize = new Size(1143, 750);
             Controls.Add(pictureBoxBarcode);
+            Margin = new Padding(4, 5, 4, 5);
             Name = "Form1";
             Text = "Form1";
             Load += Form1_Load;

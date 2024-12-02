@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 
-namespace Essencore
+namespace MSI
 {
     public partial class LoginForm : Form
     {
@@ -17,7 +17,7 @@ namespace Essencore
             string Password = password.Text;
             int empIdint;
 
-            if (int.TryParse(emp_id,out empIdint) && !string.IsNullOrEmpty(emp_id) && Password == "123") 
+            if (int.TryParse(emp_id, out empIdint) && !string.IsNullOrEmpty(emp_id) && Password == "123")
             {
                 try
                 {
@@ -33,9 +33,9 @@ namespace Essencore
 
                 catch (Exception ex)
                 {
-                    MessageBox.Show($"An error occurred: {ex.Message}");                
+                    MessageBox.Show($"An error occurred: {ex.Message}");
                 }
- 
+
             }
             else
             {
@@ -48,10 +48,20 @@ namespace Essencore
 
         private void textBox2_TextChanged(object sender, EventArgs e)
         {
- 
+
         }
 
         private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label4_Click(object sender, EventArgs e)
         {
 
         }
