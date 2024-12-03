@@ -30,7 +30,6 @@
         {
             printDialog1 = new PrintDialog();
             label1 = new Label();
-            label2 = new Label();
             txtPCBSerialNo = new TextBox();
             label4 = new Label();
             rtbInstruction = new RichTextBox();
@@ -46,7 +45,6 @@
             label11 = new Label();
             label12 = new Label();
             lbluserid = new Label();
-            cmbWorkOrderNo = new ComboBox();
             btnExit = new Button();
             pictureBox2 = new PictureBox();
             lblBarcode = new Label();
@@ -62,27 +60,16 @@
             // 
             label1.AutoSize = true;
             label1.Font = new Font("Showcard Gothic", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label1.Location = new Point(954, 149);
+            label1.Location = new Point(24, 166);
             label1.Margin = new Padding(4, 0, 4, 0);
             label1.Name = "label1";
             label1.Size = new Size(216, 26);
             label1.TabIndex = 1;
             label1.Text = "Syrma SGS Part No :";
             // 
-            // label2
-            // 
-            label2.AutoSize = true;
-            label2.Font = new Font("Showcard Gothic", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label2.Location = new Point(963, 249);
-            label2.Margin = new Padding(4, 0, 4, 0);
-            label2.Name = "label2";
-            label2.Size = new Size(193, 26);
-            label2.TabIndex = 5;
-            label2.Text = "Work Order No :";
-            // 
             // txtPCBSerialNo
             // 
-            txtPCBSerialNo.Location = new Point(757, 389);
+            txtPCBSerialNo.Location = new Point(25, 318);
             txtPCBSerialNo.Margin = new Padding(4, 5, 4, 5);
             txtPCBSerialNo.Name = "txtPCBSerialNo";
             txtPCBSerialNo.Size = new Size(593, 31);
@@ -101,7 +88,7 @@
             // 
             // rtbInstruction
             // 
-            rtbInstruction.Location = new Point(757, 466);
+            rtbInstruction.Location = new Point(25, 434);
             rtbInstruction.Margin = new Padding(4, 5, 4, 5);
             rtbInstruction.Name = "rtbInstruction";
             rtbInstruction.Size = new Size(594, 261);
@@ -112,29 +99,29 @@
             // 
             dgvBarcodeDetails.BackgroundColor = SystemColors.ButtonHighlight;
             dgvBarcodeDetails.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvBarcodeDetails.Location = new Point(25, 737);
+            dgvBarcodeDetails.Location = new Point(639, 197);
             dgvBarcodeDetails.Margin = new Padding(4, 5, 4, 5);
             dgvBarcodeDetails.Name = "dgvBarcodeDetails";
             dgvBarcodeDetails.RowHeadersWidth = 62;
-            dgvBarcodeDetails.Size = new Size(1801, 317);
+            dgvBarcodeDetails.Size = new Size(1194, 498);
             dgvBarcodeDetails.TabIndex = 16;
             // 
             // label7
             // 
             label7.AutoSize = true;
             label7.Font = new Font("Showcard Gothic", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label7.Location = new Point(963, 358);
+            label7.Location = new Point(23, 287);
             label7.Margin = new Padding(4, 0, 4, 0);
             label7.Name = "label7";
-            label7.Size = new Size(158, 26);
+            label7.Size = new Size(148, 26);
             label7.TabIndex = 17;
-            label7.Text = "PCB Serial no:";
+            label7.Text = "Material no:";
             // 
             // label8
             // 
             label8.AutoSize = true;
             label8.Font = new Font("Showcard Gothic", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label8.Location = new Point(978, 435);
+            label8.Location = new Point(24, 403);
             label8.Margin = new Padding(4, 0, 4, 0);
             label8.Name = "label8";
             label8.Size = new Size(143, 26);
@@ -145,7 +132,7 @@
             // 
             label9.AutoSize = true;
             label9.Font = new Font("Showcard Gothic", 12F);
-            label9.Location = new Point(29, 700);
+            label9.Location = new Point(632, 151);
             label9.Margin = new Padding(4, 0, 4, 0);
             label9.Name = "label9";
             label9.Size = new Size(107, 30);
@@ -166,7 +153,7 @@
             // cmbProductType
             // 
             cmbProductType.FormattingEnabled = true;
-            cmbProductType.Location = new Point(757, 180);
+            cmbProductType.Location = new Point(25, 197);
             cmbProductType.Margin = new Padding(4, 5, 4, 5);
             cmbProductType.Name = "cmbProductType";
             cmbProductType.Size = new Size(593, 33);
@@ -211,7 +198,7 @@
             // 
             label11.AutoSize = true;
             label11.Font = new Font("Showcard Gothic", 18F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label11.Location = new Point(972, 67);
+            label11.Location = new Point(861, 67);
             label11.Margin = new Padding(4, 0, 4, 0);
             label11.Name = "label11";
             label11.Size = new Size(203, 44);
@@ -240,16 +227,6 @@
             lbluserid.Size = new Size(111, 29);
             lbluserid.TabIndex = 30;
             lbluserid.Text = "0000000";
-            // 
-            // cmbWorkOrderNo
-            // 
-            cmbWorkOrderNo.FormattingEnabled = true;
-            cmbWorkOrderNo.Location = new Point(757, 280);
-            cmbWorkOrderNo.Margin = new Padding(4, 5, 4, 5);
-            cmbWorkOrderNo.Name = "cmbWorkOrderNo";
-            cmbWorkOrderNo.Size = new Size(593, 33);
-            cmbWorkOrderNo.TabIndex = 31;
-            cmbWorkOrderNo.SelectedIndexChanged += cmbWorkOrderNo_SelectedIndexChanged;
             // 
             // btnExit
             // 
@@ -281,7 +258,7 @@
             lblBarcode.BackColor = SystemColors.ActiveCaption;
             lblBarcode.Font = new Font("Showcard Gothic", 18F, FontStyle.Regular, GraphicsUnit.Point, 0);
             lblBarcode.ForeColor = SystemColors.ActiveCaptionText;
-            lblBarcode.Location = new Point(930, 17);
+            lblBarcode.Location = new Point(819, 17);
             lblBarcode.Margin = new Padding(4, 0, 4, 0);
             lblBarcode.Name = "lblBarcode";
             lblBarcode.Size = new Size(274, 44);
@@ -297,7 +274,6 @@
             ClientSize = new Size(1839, 1050);
             Controls.Add(pictureBox2);
             Controls.Add(btnExit);
-            Controls.Add(cmbWorkOrderNo);
             Controls.Add(lbluserid);
             Controls.Add(label12);
             Controls.Add(label11);
@@ -313,7 +289,6 @@
             Controls.Add(rtbInstruction);
             Controls.Add(label4);
             Controls.Add(txtPCBSerialNo);
-            Controls.Add(label2);
             Controls.Add(label1);
             Controls.Add(lblBarcode);
             Margin = new Padding(4, 5, 4, 5);
@@ -329,7 +304,6 @@
         #endregion
         private PrintDialog printDialog1;
         private Label label1;
-        private Label label2;
         private TextBox txtPCBSerialNo;
         private Label label4;
         private RichTextBox rtbInstruction;
@@ -345,7 +319,6 @@
         private Label label11;
         private Label label12;
         private Label lbluserid;
-        private ComboBox cmbWorkOrderNo;
         private Button btnExit;
         private PictureBox pictureBox2;
         private Label lblBarcode;

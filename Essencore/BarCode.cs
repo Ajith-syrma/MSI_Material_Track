@@ -54,26 +54,30 @@ namespace MSI
 
 
         //----Db coonection for serial and product number without duplicates----//
-        private void ProcessBarcode(string barcode, int labelid, string emp_id, string Work_Orderno)
+        private void ProcessBarcode(string barcode, int labelid, string emp_id)
         {
-            if (cmbProductType.SelectedIndex != 0 && cmbWorkOrderNo.SelectedValue.ToString() != "Select")
+            if (cmbProductType.SelectedIndex != 0 )
             {
-                var bcode = getConn.DbConnect(barcode, labelid, emp_id, Work_Orderno);
+                var bcode = getConn.DbConnect(barcode, labelid, emp_id);
+                //var fg = bcode[0].Fg_Name;
+                var status = bcode[0].status;
 
-                if (bcode != "Duplicate" && bcode != "NotFound")
+                if (status != "Material_Not_Found")
                 {
 
-                    rtbInstruction.Text = "Print Started";
+                    rtbInstruction.Text = status.ToString();
                     rtbInstruction.Font = new Font("Showcard Gothic", 12f);
                     rtbInstruction.BackColor = Color.LightGoldenrodYellow;
                     DataBindings();
-                    printLabelBarcode(lblProductNo.Text.ToString(), bcode.ToString());
+                    //printLabelBarcode(lblProductNo.Text.ToString(), bcode.ToString());
 
 
                     rtbInstruction.BackColor = Color.Empty;
+                    txtPCBSerialNo.Text = string.Empty;
+                    txtPCBSerialNo.Focus();
                     //txtCustomerSerialNo.Text = bcode.ToString();
                 }
-                else if (bcode == "Duplicate")
+                else if (status == "Material_Not_Found" || string.IsNullOrEmpty(status) )
                 {
 
                     txtPCBSerialNo.BackColor = Color.OrangeRed;
@@ -84,26 +88,26 @@ namespace MSI
                     };
                     blinkTimer.Tick += (s, args) => BlinkTextBox();
                     blinkTimer.Start();
-                    rtbInstruction.Text = "Duplicate";
+                    rtbInstruction.Text = "Material Not Match !!";
                     rtbInstruction.BackColor = Color.OrangeRed;
                     rtbInstruction.Font = new Font("Showcard Gothic", 12f);
                 }
-                else if (bcode == "NotFound")
-                {
-                    rtbInstruction.Text = "PCB Serial Not Found!" + Environment.NewLine + "or Product Type Mismatch!"
-                                                  + Environment.NewLine + "Please Enter or Select valid value";
-                    rtbInstruction.BackColor = Color.Gray;
-                    rtbInstruction.Font = new Font("Showcard Gothic", 12f);
-                }
+                //else if (bcode == "NotFound")
+                //{
+                //    rtbInstruction.Text = "PCB Serial Not Found!" + Environment.NewLine + "or Product Type Mismatch!"
+                //                                  + Environment.NewLine + "Please Enter or Select valid value";
+                //    rtbInstruction.BackColor = Color.Gray;
+                //    rtbInstruction.Font = new Font("Showcard Gothic", 12f);
+                //}
             }
             else if (cmbProductType.SelectedIndex == 0)
             {
-                MessageBox.Show("Please Select the Product Type");
+                MessageBox.Show("Please Select the Fg Number");
             }
-            else if (cmbWorkOrderNo.SelectedValue.ToString() == "Select")
-            {
-                MessageBox.Show("Please select the WorkOrder Number ");
-            }
+            //else if (cmbWorkOrderNo.SelectedValue.ToString() == "Select")
+            //{
+            //    MessageBox.Show("Please select the WorkOrder Number ");
+            //}
 
 
         }
@@ -136,7 +140,7 @@ namespace MSI
             txtPCBSerialNo.Focus();
             txtPCBSerialNo.Text = string.Empty;
             //txtCustomerPartNo.Text = string.Empty;
-            cmbWorkOrderNo.Text = "Select";
+            //cmbWorkOrderNo.Text = "Select";
             //txtDescription.Text = string.Empty;
             cmbProductType.SelectedIndex = 0;
             rtbInstruction.Text = string.Empty;
@@ -241,8 +245,12 @@ namespace MSI
                 // Process the barcode
                 //  ProcessBarcode(barcodeData.ToString());
                 int labelid = Convert.ToInt32(cmbProductType.SelectedValue);
-                string Work_Orderno = cmbWorkOrderNo.SelectedValue.ToString().Trim();
-                ProcessBarcode(txtPCBSerialNo.Text, labelid, this.emp_id, Work_Orderno);
+                //string Work_Orderno = cmbWorkOrderNo.SelectedValue.ToString().Trim();
+                string Mat1_val = txtPCBSerialNo.Text;
+                int Mat2 = Mat1_val.IndexOf(',');
+                string Material_no = Mat1_val.Substring(0, Mat2);
+
+                ProcessBarcode(Material_no, labelid, this.emp_id);
 
                 barcodeData.Clear();
             }
@@ -260,7 +268,7 @@ namespace MSI
 
                 string productNo = lblProductNo.Text.ToString();
                 int labelid = Convert.ToInt32(cmbProductType.SelectedValue);
-                var barcodedetails = getConn.GetBarcodeDetails(labelid);
+                var barcodedetails = getConn.GetMaterialscanDetails();
 
                 // Column design changes 
                 dgvBarcodeDetails.ColumnHeadersDefaultCellStyle.Font = new Font("Arial", 10, FontStyle.Bold);
@@ -279,14 +287,15 @@ namespace MSI
 
 
                 dgvBarcodeDetails.DataSource = barcodedetails;
-                dgvBarcodeDetails.Columns["ProductNo"].Width = 260;
-                dgvBarcodeDetails.Columns["CustomerSerialNo"].Width = 255;
-                dgvBarcodeDetails.Columns["PCBSerialNo"].Width = 250;
-                dgvBarcodeDetails.Columns["SyrmaSGSPartno"].Visible = false;
-                dgvBarcodeDetails.Columns["WorkOrderNo"].Visible = false;
-                dgvBarcodeDetails.Columns["CustomerPartNo"].Visible = false;
-                dgvBarcodeDetails.Columns["Bar_Description"].Visible = false;
-                dgvBarcodeDetails.Columns["WeekDetails"].Visible = false;
+                dgvBarcodeDetails.Columns["Fg_Name"].Width = 260;
+                dgvBarcodeDetails.Columns["Material_number"].Width = 255;
+                dgvBarcodeDetails.Columns["Customer_Material"].Width = 250;
+                dgvBarcodeDetails.Columns["Description"].Width = 250;
+                //dgvBarcodeDetails.Columns["SyrmaSGSPartno"].Visible = false;
+                //dgvBarcodeDetails.Columns["WorkOrderNo"].Visible = false;
+                //dgvBarcodeDetails.Columns["CustomerPartNo"].Visible = false;
+                //dgvBarcodeDetails.Columns["Bar_Description"].Visible = false;
+                //dgvBarcodeDetails.Columns["WeekDetails"].Visible = false;
 
 
             }
@@ -327,7 +336,7 @@ namespace MSI
                     var listNos = getConn.getWorkOrderDetails(labelid);
                     if (listNos != null && listNos.Count > 0)
                     {
-                        cmbWorkOrderNo.DataSource = listNos;
+                        //cmbWorkOrderNo.DataSource = listNos;
                     }
                 }
                 else
@@ -341,35 +350,35 @@ namespace MSI
             { MessageBox.Show(ex.Message.ToString()); }
         }
 
-        public void getFGDetails()
-        {
-            int labelid = Convert.ToInt32(cmbProductType.SelectedValue);
-            var productdetails = getConn.GetProductDetails(labelid, cmbWorkOrderNo.SelectedValue.ToString());
-            if (productdetails.WorkOrderNo != null)
-            {
-                //txtWorkorderNo.Text = productdetails.WorkOrderNo;
-                //txtCustomerPartNo.Text = productdetails.CustomerPartNo;
-                //txtDescription.Text = productdetails.ProductNo;
-                lblProductNo.Text = productdetails.ProductNo;
-                DataBindings();
-                txtPCBSerialNo.Focus();
-            }
-            else
-            {
-                dgvBarcodeDetails.Columns.Clear();
-                //txtWorkorderNo.Text = string.Empty;
-                //txtCustomerPartNo.Text = string.Empty;
-                //txtDescription.Text = string.Empty;
-                lblProductNo.Text = string.Empty;
-            }
-        }
+        //public void getFGDetails()
+        //{
+        //    int labelid = Convert.ToInt32(cmbProductType.SelectedValue);
+        //    var productdetails = getConn.GetProductDetails(labelid);
+        //    if (productdetails.WorkOrderNo != null)
+        //    {
+        //        //txtWorkorderNo.Text = productdetails.WorkOrderNo;
+        //        //txtCustomerPartNo.Text = productdetails.CustomerPartNo;
+        //        //txtDescription.Text = productdetails.ProductNo;
+        //        lblProductNo.Text = productdetails.ProductNo;
+        //        DataBindings();
+        //        txtPCBSerialNo.Focus();
+        //    }
+        //    else
+        //    {
+        //        dgvBarcodeDetails.Columns.Clear();
+        //        //txtWorkorderNo.Text = string.Empty;
+        //        //txtCustomerPartNo.Text = string.Empty;
+        //        //txtDescription.Text = string.Empty;
+        //        lblProductNo.Text = string.Empty;
+        //    }
+        //}
 
         private void cmbWorkOrderNo_SelectedIndexChanged(object sender, EventArgs e)
         {
             try
             {
-                if (cmbWorkOrderNo.SelectedValue.ToString() != "Select" && cmbWorkOrderNo.Text != string.Empty)
-                    getFGDetails();
+                //if (cmbWorkOrderNo.SelectedValue.ToString() != "Select" && cmbWorkOrderNo.Text != string.Empty)
+                //    getFGDetails();
             }
             catch (Exception ex)
             {

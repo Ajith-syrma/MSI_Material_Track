@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Data.SqlClient;
 using System.Configuration;
 using System.Data;
+using System.Runtime.InteropServices.JavaScript;
 namespace MSI
 {
    
@@ -16,47 +17,59 @@ namespace MSI
         SqlDataAdapter adapter;
         SqlDataReader reader;
         DataTable dt;
-        public string DbConnect(string barcode,int labelid,string emp_id,string Work_Orderno)
+        
+        public List<Material_status> DbConnect(string barcode, int labelid, string emp_id)
         {
+            var listMaterialstatus = new List<Material_status>();
             try
             {
-                cmd = new SqlCommand("pro_getCustomerSerialNoSSD", con);
+                Material_status objMatstatus;
+                cmd = new SqlCommand("pro_getMaterialstatus", con);
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@pcbserialno", barcode);
-                cmd.Parameters.AddWithValue("@labelmasterid", labelid);
+                cmd.Parameters.AddWithValue("@Alternate_Material_no", barcode);
+                cmd.Parameters.AddWithValue("@ProductID", labelid);
                 cmd.Parameters.AddWithValue("@user_id",emp_id);
-                cmd.Parameters.AddWithValue("@Work_Orderno", Work_Orderno);
-                con.Open();
-                var reader = cmd.ExecuteScalar();
-                con.Close();
-                return reader.ToString();
+                //cmd.Parameters.AddWithValue("@Work_Orderno", Work_Orderno);
+                adapter = new SqlDataAdapter(cmd);
+                dt = new DataTable();
+                adapter.Fill(dt);
+                foreach (DataRow dr in dt.Rows)
+                {
+                    objMatstatus = new Material_status();
+                    //objMatstatus.Fg_Name = Convert.ToString(dr["Fg_Name"]);
+                    objMatstatus.status = Convert.ToString(dr["Status1"]);
+                    listMaterialstatus.Add(objMatstatus);
+                }
+                return listMaterialstatus;
             }
             catch (Exception ex)
             {
-                return string.Empty;
-                MessageBox.Show("Error : " + ex.Message.ToString());
+                return listMaterialstatus;
+                MessageBox.Show("Error :" + ex.Message.ToString());
             }
+
         }
 
-        public List<BarcodeDetails> GetBarcodeDetails(int labelid)
+        public List<BarcodeDetails> GetMaterialscanDetails()
         {
             var list = new List<BarcodeDetails>();
             try
             {
                 
                 BarcodeDetails objBar;
-                cmd = new SqlCommand("pro_getPrintedValueEssencoreSSD", con);
+                cmd = new SqlCommand("pro_getPrintedValueMsiMaterialTrack", con);
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@labelmasterid", labelid);
+                //cmd.Parameters.AddWithValue("@labelmasterid", labelid);
                 adapter = new SqlDataAdapter(cmd);
                 dt = new DataTable();
                 adapter.Fill(dt);
                 foreach (DataRow dr in dt.Rows)
                 {
                     objBar = new BarcodeDetails();
-                    objBar.CustomerSerialNo = Convert.ToString(dr["CustomerSerialNo"]);
-                    objBar.PCBSerialNo = Convert.ToString(dr["PCBSerialNo"]);
-                    objBar.ProductNo = Convert.ToString(dr["productno"]);
+                    objBar.Fg_Name = Convert.ToString(dr["Fg_Name"]);
+                    objBar.Material_number = Convert.ToString(dr["Material_number"]);
+                    objBar.Customer_Material = Convert.ToString(dr["Customer_Material"]);
+                    objBar.Description = Convert.ToString(dr["Description"]);
                     list.Add(objBar);
                 }
                 return list;
@@ -74,7 +87,7 @@ namespace MSI
             {
                 
                 labeltype objType = new labeltype();
-                cmd = new SqlCommand("getLabelTypeEssencoreSSD", con);
+                cmd = new SqlCommand("getLabelTypeMsi", con);
                 cmd.CommandType = CommandType.StoredProcedure;
                 adapter = new SqlDataAdapter(cmd);
                 dt = new DataTable();
@@ -82,8 +95,8 @@ namespace MSI
                 foreach (DataRow dr in dt.Rows)
                 {
                     objType = new labeltype();
-                    objType.labelmasterid = Convert.ToInt32(dr["labelmasterid"]);
-                    objType.labelname = Convert.ToString(dr["labeltype"]);
+                    objType.labelmasterid = Convert.ToInt32(dr["ProductID"]);
+                    objType.labelname = Convert.ToString(dr["Fg_Name"]);
                     lstType.Add(objType);
                 }
                 return lstType;
@@ -121,38 +134,38 @@ namespace MSI
             }
         }
 
-        public BarcodeDetails GetProductDetails(int labelid,string workorderno)
-        {
-            var barCodeDetils = new BarcodeDetails();
-            try
-            {
-                string result = string.Empty;
-                cmd = new SqlCommand("get_ProductNoEssencoreSSD", con);
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@labelid", labelid);
-                cmd.Parameters.AddWithValue("@WorkOrderNo", workorderno);
-                adapter = new SqlDataAdapter(cmd);
-                dt = new DataTable();
-                adapter.Fill(dt);
-                if (dt.Rows.Count > 0)
-                {
-                    barCodeDetils.SyrmaSGSPartno = dt.Rows[0]["SyrmaSGSPartno"].ToString();
-                    barCodeDetils.WorkOrderNo = dt.Rows[0]["WorkOrderNo"].ToString();
-                    barCodeDetils.CustomerPartNo = dt.Rows[0]["CustomerPartNo"].ToString();
-                    barCodeDetils.Bar_Description = dt.Rows[0]["Bar_Description"].ToString();
-                    barCodeDetils.WeekDetails = Convert.ToInt32(dt.Rows[0]["WeekDetails"].ToString());
-                    barCodeDetils.ProductNo = dt.Rows[0]["productno"].ToString();
-                }
-                //con.Open();
-                //result = Convert.ToString(cmd.ExecuteScalar());
-                //con.Close();
-                return barCodeDetils;
-            }
-            catch (Exception ex)
-            {
-                return barCodeDetils;
-                MessageBox.Show("Error :" + ex.Message.ToString());
-            }
-        }
+        //public BarcodeDetails GetProductDetails(int labelid)
+        //{
+        //    var barCodeDetils = new BarcodeDetails();
+        //    try
+        //    {
+        //        string result = string.Empty;
+        //        cmd = new SqlCommand("get_ProductNoEssencoreSSD", con);
+        //        cmd.CommandType = CommandType.StoredProcedure;
+        //        cmd.Parameters.AddWithValue("@labelid", labelid);
+        //        //cmd.Parameters.AddWithValue("@WorkOrderNo", workorderno);
+        //        adapter = new SqlDataAdapter(cmd);
+        //        dt = new DataTable();
+        //        adapter.Fill(dt);
+        //        if (dt.Rows.Count > 0)
+        //        {
+        //            barCodeDetils.SyrmaSGSPartno = dt.Rows[0]["SyrmaSGSPartno"].ToString();
+        //            barCodeDetils.WorkOrderNo = dt.Rows[0]["WorkOrderNo"].ToString();
+        //            barCodeDetils.CustomerPartNo = dt.Rows[0]["CustomerPartNo"].ToString();
+        //            barCodeDetils.Bar_Description = dt.Rows[0]["Bar_Description"].ToString();
+        //            barCodeDetils.WeekDetails = Convert.ToInt32(dt.Rows[0]["WeekDetails"].ToString());
+        //            barCodeDetils.ProductNo = dt.Rows[0]["productno"].ToString();
+        //        }
+        //        //con.Open();
+        //        //result = Convert.ToString(cmd.ExecuteScalar());
+        //        //con.Close();
+        //        return barCodeDetils;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return barCodeDetils;
+        //        MessageBox.Show("Error :" + ex.Message.ToString());
+        //    }
+        //}
     }
 }
