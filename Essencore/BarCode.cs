@@ -66,18 +66,30 @@ namespace MSI
                 {
                     if (status.IndexOf("Alternate", StringComparison.OrdinalIgnoreCase) >= 0)
                     {
-                        DialogResult result= MessageBox.Show($"{status}" + Environment.NewLine + "Press OK to continue"+
-                                                      Environment.NewLine + "Close button to remove");
+                        DialogResult result= MessageBox.Show(
+                                                          $"{status}" + Environment.NewLine + "Press OK to continue" +
+                                                                        Environment.NewLine + "Close button to remove",
+                                                                                                     "Confirmation",
+                                                                                            MessageBoxButtons.OKCancel,
+                                                                                            MessageBoxIcon.Information);
+
                         if (result == DialogResult.OK )
                         {
                             rtbInstruction.Text = status.ToString();
-                            rtbInstruction.Font = new Font("Showcard Gothic", 12f);
-                            rtbInstruction.BackColor = Color.BlueViolet;
+                            rtbInstruction.Font = new Font("Calibri", 12f, FontStyle.Bold);
+                            rtbInstruction.BackColor = Color.Violet;
                             DataBindings();
                             //printLabelBarcode(lblProductNo.Text.ToString(), bcode.ToString());
 
 
-                            rtbInstruction.BackColor = Color.BlueViolet;
+                            rtbInstruction.BackColor = Color.Violet;
+                            txtPCBSerialNo.Text = string.Empty;
+                            txtPCBSerialNo.Focus();
+                        }
+                        else if (result == DialogResult.Cancel || result == DialogResult.None)
+                        {
+                            rtbInstruction.Text = string.Empty;
+                            rtbInstruction.BackColor = Color.Empty;
                             txtPCBSerialNo.Text = string.Empty;
                             txtPCBSerialNo.Focus();
                         }
@@ -86,7 +98,7 @@ namespace MSI
                     else
                     {
                         rtbInstruction.Text = status.ToString();
-                        rtbInstruction.Font = new Font("Showcard Gothic", 12f);
+                        rtbInstruction.Font = new Font("Calibri", 12f, FontStyle.Bold);
                         rtbInstruction.BackColor = Color.LightGreen;
                         DataBindings();
                         //printLabelBarcode(lblProductNo.Text.ToString(), bcode.ToString());
@@ -112,7 +124,7 @@ namespace MSI
                     blinkTimer.Start();
                     rtbInstruction.Text = "Material Not Match !!";
                     rtbInstruction.BackColor = Color.OrangeRed;
-                    rtbInstruction.Font = new Font("Showcard Gothic", 12f);
+                    rtbInstruction.Font = new Font("Calibri", 12f, FontStyle.Bold);
                 }
                 //else if (bcode == "NotFound")
                 //{
