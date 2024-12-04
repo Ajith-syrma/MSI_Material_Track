@@ -64,19 +64,41 @@ namespace MSI
 
                 if (status != "Material_Not_Found")
                 {
+                    if (status.IndexOf("Alternate", StringComparison.OrdinalIgnoreCase) >= 0)
+                    {
+                        DialogResult result= MessageBox.Show($"{status}" + Environment.NewLine + "Press OK to continue"+
+                                                      Environment.NewLine + "Close button to remove");
+                        if (result == DialogResult.OK )
+                        {
+                            rtbInstruction.Text = status.ToString();
+                            rtbInstruction.Font = new Font("Showcard Gothic", 12f);
+                            rtbInstruction.BackColor = Color.BlueViolet;
+                            DataBindings();
+                            //printLabelBarcode(lblProductNo.Text.ToString(), bcode.ToString());
 
-                    rtbInstruction.Text = status.ToString();
-                    rtbInstruction.Font = new Font("Showcard Gothic", 12f);
-                    rtbInstruction.BackColor = Color.LightGoldenrodYellow;
-                    DataBindings();
-                    //printLabelBarcode(lblProductNo.Text.ToString(), bcode.ToString());
+
+                            rtbInstruction.BackColor = Color.BlueViolet;
+                            txtPCBSerialNo.Text = string.Empty;
+                            txtPCBSerialNo.Focus();
+                        }
+
+                    }
+                    else
+                    {
+                        rtbInstruction.Text = status.ToString();
+                        rtbInstruction.Font = new Font("Showcard Gothic", 12f);
+                        rtbInstruction.BackColor = Color.LightGreen;
+                        DataBindings();
+                        //printLabelBarcode(lblProductNo.Text.ToString(), bcode.ToString());
 
 
-                    rtbInstruction.BackColor = Color.Empty;
-                    txtPCBSerialNo.Text = string.Empty;
-                    txtPCBSerialNo.Focus();
-                    //txtCustomerSerialNo.Text = bcode.ToString();
+                        rtbInstruction.BackColor = Color.LightGreen;
+                        txtPCBSerialNo.Text = string.Empty;
+                        txtPCBSerialNo.Focus();
+                        //txtCustomerSerialNo.Text = bcode.ToString();
+                    }
                 }
+
                 else if (status == "Material_Not_Found" || string.IsNullOrEmpty(status) )
                 {
 
