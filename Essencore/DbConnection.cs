@@ -37,6 +37,8 @@ namespace MSI
                 {
                     objMatstatus = new Material_status();
                     //objMatstatus.Fg_Name = Convert.ToString(dr["Fg_Name"]);
+                    objMatstatus.ProductID = Convert.ToString(dr["ProductID"]);
+                    objMatstatus.Material_no = Convert.ToString(dr["Material_no"]);
                     objMatstatus.status = Convert.ToString(dr["Status1"]);
                     listMaterialstatus.Add(objMatstatus);
                 }
@@ -131,6 +133,29 @@ namespace MSI
             catch (Exception ex) {
                 return listWorkOrderNos ;
                 MessageBox.Show(ex.Message.ToString());
+            }
+        }
+
+
+        public void mat_input_status(string ProductID, string Materialno,string empid)
+        {
+            
+            try
+            {
+                cmd = new SqlCommand("pro_Mat_Track_input_status", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@ProductID", ProductID);
+                cmd.Parameters.AddWithValue("@Material_no", Materialno);
+                cmd.Parameters.AddWithValue("@user_id", empid);
+                adapter = new SqlDataAdapter(cmd);
+                dt = new DataTable();
+                adapter.Fill(dt);
+
+            }
+            catch (Exception ex)
+            {
+                
+                MessageBox.Show("Error", "Database not connected");
             }
         }
 

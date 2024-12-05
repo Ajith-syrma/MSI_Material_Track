@@ -7,6 +7,7 @@ using BarTender;
 using System.Globalization;
 using System.Diagnostics.Eventing.Reader;
 using Timer = System.Windows.Forms.Timer;
+using ZXing.QrCode.Internal;
 
 
 namespace MSI
@@ -65,7 +66,8 @@ namespace MSI
             if (cmbProductType.SelectedIndex != 0 )
             {
                 var bcode = getConn.DbConnect(barcode, labelid, emp_id);
-                //var fg = bcode[0].Fg_Name;
+                var ProductID = bcode[0].ProductID;
+                var Materialno = bcode[0].Material_no;
                 var status = bcode[0].status;
 
                 if (status != "Material_Not_Found")
@@ -85,7 +87,7 @@ namespace MSI
                             rtbInstruction.Font = new Font("Calibri", 12f, FontStyle.Bold);
                             rtbInstruction.BackColor = Color.Violet;
                             DataBindings();
-                            //printLabelBarcode(lblProductNo.Text.ToString(), bcode.ToString());
+                            printLabelBarcode(ProductID, Materialno,emp_id);
 
 
                             rtbInstruction.BackColor = Color.Violet;
@@ -107,7 +109,7 @@ namespace MSI
                         rtbInstruction.Font = new Font("Calibri", 12f, FontStyle.Bold);
                         rtbInstruction.BackColor = Color.LightGreen;
                         DataBindings();
-                        //printLabelBarcode(lblProductNo.Text.ToString(), bcode.ToString());
+                        printLabelBarcode(ProductID, Materialno,emp_id);
 
 
                         rtbInstruction.BackColor = Color.LightGreen;
@@ -191,41 +193,18 @@ namespace MSI
         }
 
 
-        public void printLabelBarcode(string productno, string cus_serialno)
+        public void printLabelBarcode(string ProductID, string Materialno,string empid)
         {
-            try
+            if(!string.IsNullOrEmpty(ProductID) && !string.IsNullOrEmpty(Materialno))
             {
-
-                //string labelFormatPath = @"D:\QR_CODE.btw";
-                string labelFormatPath = @"D:\QREssencoreNew.btw";
-
-                var product_no = string.IsNullOrEmpty(productno) ? string.Empty : productno;
-                var cus_no = string.IsNullOrEmpty(cus_serialno) ? string.Empty : cus_serialno;
-                if (product_no != string.Empty && cus_no != string.Empty)
-                {
-
-                    var externalValues = new Dictionary<string, string>
-        {
-            { "SerialNumber", cus_serialno },
-            { "ProductNumber", productno },
-            { "QR_value1", cus_serialno.Trim().Substring(0,5) },
-            { "QR_value2", cus_serialno.Trim().Substring(cus_serialno.Length-5) },
-
-        };
-
-                    PrintLabel(labelFormatPath, externalValues);
-                    txtPCBSerialNo.Text = string.Empty;
-                    txtPCBSerialNo.Focus();
-                }
-                else
-                {
-                    MessageBox.Show("Database not connected. Please check with admin");
-                }
+                getConn.mat_input_status(ProductID, Materialno,empid);
             }
-            catch (Exception ex)
+
+            else
             {
-                MessageBox.Show(ex.Message.ToString());
+                MessageBox.Show("Material Value not updated please check the value");
             }
+
         }
 
         public void PrintLabel(string labelFormatPath, Dictionary<string, string> values)
