@@ -6,6 +6,7 @@ using System.Runtime.InteropServices;
 using BarTender;
 using System.Globalization;
 using System.Diagnostics.Eventing.Reader;
+using Timer = System.Windows.Forms.Timer;
 
 
 namespace MSI
@@ -18,6 +19,8 @@ namespace MSI
         private bool isBlinking;
         private Color originalColor;
         private string emp_id;
+        private Timer _timer;
+        private const int DelayTime = 1000;
 
         public frmBarcode(string emp_id)
         {
@@ -29,6 +32,9 @@ namespace MSI
             this.KeyPreview = true;
             FormBorderStyle = FormBorderStyle.None;
             WindowState = FormWindowState.Maximized;
+            _timer = new Timer();
+            _timer.Interval = DelayTime;  // 2 seconds
+            _timer.Tick += Timer_Tick;
         }
 
 
@@ -68,7 +74,7 @@ namespace MSI
                     {
                         DialogResult result= MessageBox.Show(
                                                           $"{status}" + Environment.NewLine + "Press OK to continue" +
-                                                                        Environment.NewLine + "Close button to remove",
+                                                                        Environment.NewLine + "Cancel button to remove",
                                                                                                      "Confirmation",
                                                                                             MessageBoxButtons.OKCancel,
                                                                                             MessageBoxIcon.Information);
@@ -137,6 +143,8 @@ namespace MSI
             else if (cmbProductType.SelectedIndex == 0)
             {
                 MessageBox.Show("Please Select the Fg Number");
+                txtPCBSerialNo.Text = string.Empty;
+
             }
             //else if (cmbWorkOrderNo.SelectedValue.ToString() == "Select")
             //{
@@ -272,27 +280,40 @@ namespace MSI
 
         }
 
-        private void txtPCBSerialNo_KeyDown(object sender, KeyEventArgs e)
+
+        private void txtPCBSerialNo_TextChanged(object sender, EventArgs e)
         {
-            if (e.KeyCode == Keys.Enter)
+            // Stop the timer if it's running
+            _timer.Stop();
+
+            // Start the timer every time the text changes
+            _timer.Start();
+        }
+
+        private void Timer_Tick(object sender, EventArgs e)
+        {
+
+            _timer.Stop();
+
+            if (!string.IsNullOrEmpty(txtPCBSerialNo.Text))
             {
                 // Process the barcode
                 //  ProcessBarcode(barcodeData.ToString());
                 int labelid = Convert.ToInt32(cmbProductType.SelectedValue);
                 //string Work_Orderno = cmbWorkOrderNo.SelectedValue.ToString().Trim();
                 string Mat1_val = txtPCBSerialNo.Text;
-                int Mat2 = Mat1_val.IndexOf(',');
+                int Mat2 = Mat1_val.IndexOf(',','$');
                 string Material_no = Mat1_val.Substring(0, Mat2);
 
                 ProcessBarcode(Material_no, labelid, this.emp_id);
 
                 barcodeData.Clear();
             }
-            else
-            {
-                // Append the keystroke to the barcode data
-                barcodeData.Append((char)e.KeyValue);
-            }
+            //else
+            //{
+            //    // Append the keystroke to the barcode data
+            //    barcodeData.Append((char)e.KeyValue);
+            //}
         }
 
         public void DataBindings()

@@ -74,7 +74,7 @@
             txtPCBSerialNo.Name = "txtPCBSerialNo";
             txtPCBSerialNo.Size = new Size(593, 31);
             txtPCBSerialNo.TabIndex = 6;
-            txtPCBSerialNo.KeyDown += txtPCBSerialNo_KeyDown;
+            txtPCBSerialNo.TextChanged += txtPCBSerialNo_TextChanged;
             // 
             // label4
             // 
