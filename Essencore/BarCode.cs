@@ -369,10 +369,10 @@ namespace MSI
 
 
                 dgvBarcodeDetails.DataSource = barcodedetails;
-                dgvBarcodeDetails.Columns["Fg_Name"].Width = 260;
-                dgvBarcodeDetails.Columns["Material_number"].Width = 255;
-                dgvBarcodeDetails.Columns["Customer_Material"].Width = 250;
-                dgvBarcodeDetails.Columns["Description"].Width = 250;
+                dgvBarcodeDetails.Columns["Fg_Name"].Width = 200;
+                dgvBarcodeDetails.Columns["Material_number"].Width = 200;
+                dgvBarcodeDetails.Columns["Customer_Material"].Width = 200;
+                dgvBarcodeDetails.Columns["Description"].Width = 200;
                 //dgvBarcodeDetails.Columns["SyrmaSGSPartno"].Visible = false;
                 //dgvBarcodeDetails.Columns["WorkOrderNo"].Visible = false;
                 //dgvBarcodeDetails.Columns["CustomerPartNo"].Visible = false;

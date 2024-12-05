@@ -60,19 +60,17 @@
             // 
             label1.AutoSize = true;
             label1.Font = new Font("Showcard Gothic", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label1.Location = new Point(24, 166);
-            label1.Margin = new Padding(4, 0, 4, 0);
+            label1.Location = new Point(17, 100);
             label1.Name = "label1";
-            label1.Size = new Size(216, 26);
+            label1.Size = new Size(145, 17);
             label1.TabIndex = 1;
             label1.Text = "Syrma SGS Part No :";
             // 
             // txtPCBSerialNo
             // 
-            txtPCBSerialNo.Location = new Point(25, 318);
-            txtPCBSerialNo.Margin = new Padding(4, 5, 4, 5);
+            txtPCBSerialNo.Location = new Point(18, 191);
             txtPCBSerialNo.Name = "txtPCBSerialNo";
-            txtPCBSerialNo.Size = new Size(593, 31);
+            txtPCBSerialNo.Size = new Size(416, 23);
             txtPCBSerialNo.TabIndex = 6;
             txtPCBSerialNo.TextChanged += txtPCBSerialNo_TextChanged;
             // 
@@ -80,18 +78,16 @@
             // 
             label4.AutoSize = true;
             label4.Font = new Font("Showcard Gothic", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label4.Location = new Point(29, 653);
-            label4.Margin = new Padding(4, 0, 4, 0);
+            label4.Location = new Point(20, 392);
             label4.Name = "label4";
-            label4.Size = new Size(0, 26);
+            label4.Size = new Size(0, 17);
             label4.TabIndex = 9;
             // 
             // rtbInstruction
             // 
-            rtbInstruction.Location = new Point(25, 434);
-            rtbInstruction.Margin = new Padding(4, 5, 4, 5);
+            rtbInstruction.Location = new Point(18, 260);
             rtbInstruction.Name = "rtbInstruction";
-            rtbInstruction.Size = new Size(594, 261);
+            rtbInstruction.Size = new Size(417, 370);
             rtbInstruction.TabIndex = 15;
             rtbInstruction.Text = "";
             // 
@@ -99,21 +95,19 @@
             // 
             dgvBarcodeDetails.BackgroundColor = SystemColors.ButtonHighlight;
             dgvBarcodeDetails.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvBarcodeDetails.Location = new Point(639, 197);
-            dgvBarcodeDetails.Margin = new Padding(4, 5, 4, 5);
+            dgvBarcodeDetails.Location = new Point(447, 118);
             dgvBarcodeDetails.Name = "dgvBarcodeDetails";
             dgvBarcodeDetails.RowHeadersWidth = 62;
-            dgvBarcodeDetails.Size = new Size(1194, 498);
+            dgvBarcodeDetails.Size = new Size(836, 512);
             dgvBarcodeDetails.TabIndex = 16;
             // 
             // label7
             // 
             label7.AutoSize = true;
             label7.Font = new Font("Showcard Gothic", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label7.Location = new Point(23, 287);
-            label7.Margin = new Padding(4, 0, 4, 0);
+            label7.Location = new Point(16, 172);
             label7.Name = "label7";
-            label7.Size = new Size(148, 26);
+            label7.Size = new Size(98, 17);
             label7.TabIndex = 17;
             label7.Text = "Material no:";
             // 
@@ -121,10 +115,9 @@
             // 
             label8.AutoSize = true;
             label8.Font = new Font("Showcard Gothic", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label8.Location = new Point(24, 403);
-            label8.Margin = new Padding(4, 0, 4, 0);
+            label8.Location = new Point(17, 242);
             label8.Name = "label8";
-            label8.Size = new Size(143, 26);
+            label8.Size = new Size(98, 17);
             label8.TabIndex = 18;
             label8.Text = "Instruction";
             // 
@@ -132,19 +125,17 @@
             // 
             label9.AutoSize = true;
             label9.Font = new Font("Showcard Gothic", 12F);
-            label9.Location = new Point(632, 151);
-            label9.Margin = new Padding(4, 0, 4, 0);
+            label9.Location = new Point(442, 91);
             label9.Name = "label9";
-            label9.Size = new Size(107, 30);
+            label9.Size = new Size(73, 20);
             label9.TabIndex = 19;
             label9.Text = "Report";
             // 
             // btnClear
             // 
-            btnClear.Location = new Point(34, 1122);
-            btnClear.Margin = new Padding(4, 5, 4, 5);
+            btnClear.Location = new Point(20, 673);
             btnClear.Name = "btnClear";
-            btnClear.Size = new Size(594, 52);
+            btnClear.Size = new Size(416, 31);
             btnClear.TabIndex = 20;
             btnClear.Text = "Clear";
             btnClear.UseVisualStyleBackColor = true;
@@ -153,10 +144,9 @@
             // cmbProductType
             // 
             cmbProductType.FormattingEnabled = true;
-            cmbProductType.Location = new Point(25, 197);
-            cmbProductType.Margin = new Padding(4, 5, 4, 5);
+            cmbProductType.Location = new Point(18, 118);
             cmbProductType.Name = "cmbProductType";
-            cmbProductType.Size = new Size(593, 33);
+            cmbProductType.Size = new Size(416, 23);
             cmbProductType.TabIndex = 21;
             cmbProductType.SelectedIndexChanged += cmbProductType_SelectedIndexChanged;
             // 
@@ -164,10 +154,9 @@
             // 
             lblProductNo.AutoSize = true;
             lblProductNo.Font = new Font("Showcard Gothic", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            lblProductNo.Location = new Point(33, 730);
-            lblProductNo.Margin = new Padding(4, 0, 4, 0);
+            lblProductNo.Location = new Point(23, 438);
             lblProductNo.Name = "lblProductNo";
-            lblProductNo.Size = new Size(0, 26);
+            lblProductNo.Size = new Size(0, 17);
             lblProductNo.TabIndex = 23;
             lblProductNo.Visible = false;
             // 
@@ -176,10 +165,9 @@
             label10.AllowDrop = true;
             label10.AutoSize = true;
             label10.Font = new Font("Showcard Gothic", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label10.Location = new Point(39, 17);
-            label10.Margin = new Padding(4, 0, 4, 0);
+            label10.Location = new Point(27, 10);
             label10.Name = "label10";
-            label10.Size = new Size(145, 23);
+            label10.Size = new Size(100, 15);
             label10.TabIndex = 25;
             label10.Text = "08 August 2024";
             // 
@@ -187,10 +175,9 @@
             // 
             lblWeekNumber.AutoSize = true;
             lblWeekNumber.Font = new Font("Showcard Gothic", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            lblWeekNumber.Location = new Point(307, 17);
-            lblWeekNumber.Margin = new Padding(4, 0, 4, 0);
+            lblWeekNumber.Location = new Point(215, 10);
             lblWeekNumber.Name = "lblWeekNumber";
-            lblWeekNumber.Size = new Size(72, 23);
+            lblWeekNumber.Size = new Size(50, 15);
             lblWeekNumber.TabIndex = 27;
             lblWeekNumber.Text = "12:53:18";
             // 
@@ -198,10 +185,9 @@
             // 
             label11.AutoSize = true;
             label11.Font = new Font("Showcard Gothic", 18F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label11.Location = new Point(861, 67);
-            label11.Margin = new Padding(4, 0, 4, 0);
+            label11.Location = new Point(603, 40);
             label11.Name = "label11";
-            label11.Size = new Size(203, 44);
+            label11.Size = new Size(136, 30);
             label11.TabIndex = 28;
             label11.Text = "Tracking ";
             // 
@@ -209,10 +195,9 @@
             // 
             label12.AutoSize = true;
             label12.Font = new Font("Showcard Gothic", 12F);
-            label12.Location = new Point(1361, 15);
-            label12.Margin = new Padding(4, 0, 4, 0);
+            label12.Location = new Point(953, 9);
             label12.Name = "label12";
-            label12.Size = new Size(101, 30);
+            label12.Size = new Size(70, 20);
             label12.TabIndex = 29;
             label12.Text = "User ID";
             // 
@@ -221,10 +206,9 @@
             lbluserid.AllowDrop = true;
             lbluserid.AutoSize = true;
             lbluserid.Font = new Font("Showcard Gothic", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            lbluserid.Location = new Point(1469, 17);
-            lbluserid.Margin = new Padding(4, 0, 4, 0);
+            lbluserid.Location = new Point(1028, 10);
             lbluserid.Name = "lbluserid";
-            lbluserid.Size = new Size(111, 29);
+            lbluserid.Size = new Size(71, 18);
             lbluserid.TabIndex = 30;
             lbluserid.Text = "0000000";
             // 
@@ -233,10 +217,9 @@
             btnExit.BackColor = Color.IndianRed;
             btnExit.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnExit.ForeColor = Color.White;
-            btnExit.Location = new Point(1444, 1132);
-            btnExit.Margin = new Padding(4, 5, 4, 5);
+            btnExit.Location = new Point(1011, 679);
             btnExit.Name = "btnExit";
-            btnExit.Size = new Size(391, 52);
+            btnExit.Size = new Size(274, 31);
             btnExit.TabIndex = 32;
             btnExit.Text = "Exit";
             btnExit.UseVisualStyleBackColor = false;
@@ -245,10 +228,9 @@
             // pictureBox2
             // 
             pictureBox2.Image = Properties.Resources.SyrmaSgs;
-            pictureBox2.Location = new Point(1613, 33);
-            pictureBox2.Margin = new Padding(4, 5, 4, 5);
+            pictureBox2.Location = new Point(1129, 20);
             pictureBox2.Name = "pictureBox2";
-            pictureBox2.Size = new Size(220, 83);
+            pictureBox2.Size = new Size(154, 50);
             pictureBox2.TabIndex = 33;
             pictureBox2.TabStop = false;
             // 
@@ -258,20 +240,19 @@
             lblBarcode.BackColor = SystemColors.ActiveCaption;
             lblBarcode.Font = new Font("Showcard Gothic", 18F, FontStyle.Regular, GraphicsUnit.Point, 0);
             lblBarcode.ForeColor = SystemColors.ActiveCaptionText;
-            lblBarcode.Location = new Point(819, 17);
-            lblBarcode.Margin = new Padding(4, 0, 4, 0);
+            lblBarcode.Location = new Point(573, 10);
             lblBarcode.Name = "lblBarcode";
-            lblBarcode.Size = new Size(274, 44);
+            lblBarcode.Size = new Size(186, 30);
             lblBarcode.TabIndex = 0;
             lblBarcode.Text = "MSI   Material";
             lblBarcode.Click += lblBarcode_Click;
             // 
             // frmBarcode
             // 
-            AutoScaleDimensions = new SizeF(10F, 25F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.AppWorkspace;
-            ClientSize = new Size(1839, 1050);
+            ClientSize = new Size(959, 723);
             Controls.Add(pictureBox2);
             Controls.Add(btnExit);
             Controls.Add(lbluserid);
@@ -291,7 +272,6 @@
             Controls.Add(txtPCBSerialNo);
             Controls.Add(label1);
             Controls.Add(lblBarcode);
-            Margin = new Padding(4, 5, 4, 5);
             Name = "frmBarcode";
             Text = "BarCode";
             Load += frmBarcode_Load;
