@@ -86,8 +86,8 @@ namespace MSI
                             rtbInstruction.Text = status.ToString();
                             rtbInstruction.Font = new Font("Calibri", 12f, FontStyle.Bold);
                             rtbInstruction.BackColor = Color.Violet;
-                            DataBindings();
                             printLabelBarcode(ProductID, Materialno,emp_id);
+                            DataBindings();
 
 
                             rtbInstruction.BackColor = Color.Violet;
@@ -108,8 +108,8 @@ namespace MSI
                         rtbInstruction.Text = status.ToString();
                         rtbInstruction.Font = new Font("Calibri", 12f, FontStyle.Bold);
                         rtbInstruction.BackColor = Color.LightGreen;
-                        DataBindings();
                         printLabelBarcode(ProductID, Materialno,emp_id);
+                        DataBindings();
 
 
                         rtbInstruction.BackColor = Color.LightGreen;
