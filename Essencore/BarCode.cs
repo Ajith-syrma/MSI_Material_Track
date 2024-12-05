@@ -302,7 +302,34 @@ namespace MSI
                 int labelid = Convert.ToInt32(cmbProductType.SelectedValue);
                 //string Work_Orderno = cmbWorkOrderNo.SelectedValue.ToString().Trim();
                 string Mat1_val = txtPCBSerialNo.Text;
-                int Mat2 = Mat1_val.IndexOf(',','$');
+                int indexComma = Mat1_val.IndexOf(',');
+                int indexDollar = Mat1_val.IndexOf('$');
+
+                // Find the smallest index (the first occurring delimiter)
+                int Mat2 = -1;
+
+                if (indexComma == -1 && indexDollar == -1)
+                {
+                    // No delimiter found, use the entire string
+                    Mat2 = Mat1_val.Length;
+                }
+                else if (indexComma == -1)
+                {
+                    // Only the dollar sign was found, use its index
+                    Mat2 = indexDollar;
+                }
+                else if (indexDollar == -1)
+                {
+                    // Only the comma was found, use its index
+                    Mat2 = indexComma;
+                }
+                else
+                {
+                    // Both delimiters found, use the smaller index (whichever comes first)
+                    Mat2 = Math.Min(indexComma, indexDollar);
+                }
+
+                //int Mat2 = Mat1_val.IndexOf(',');
                 string Material_no = Mat1_val.Substring(0, Mat2);
 
                 ProcessBarcode(Material_no, labelid, this.emp_id);
