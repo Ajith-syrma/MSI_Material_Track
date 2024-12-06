@@ -27,6 +27,7 @@ namespace MSI
         {
             InitializeComponent();
             DisplayWeekNumber();
+            this.AutoScaleMode = AutoScaleMode.Dpi;
             this.emp_id = emp_id;
             lbluserid.Text = this.emp_id;
 
